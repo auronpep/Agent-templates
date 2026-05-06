@@ -1,0 +1,12 @@
+#!/bin/sh
+remote_name="${1:-}"
+remote_url="${2:-}"
+
+case "$remote_name $remote_url" in
+  *upstream*|*davila7/claude-code-templates*|*DISABLED_PUSH_TO_PUBLIC_UPSTREAM*)
+    echo "Blocked: Agent-templates is a private mirror. Push to origin, not the public upstream." >&2
+    exit 1
+    ;;
+esac
+
+exit 0
