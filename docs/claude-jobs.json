@@ -1,12 +1,74 @@
 {
-  "lastUpdated": "2026-07-08T05:55:26.355507+00:00",
+  "lastUpdated": "2026-07-10T06:49:01.037081+00:00",
   "totalJobs": 90,
   "sources": [
     "Anthropic",
     "HackerNews",
-    "RemoteOK"
+    "WeWorkRemotely"
   ],
   "jobs": [
+    {
+      "id": "anth-5309805008",
+      "company": "Anthropic",
+      "position": "Engineering Manager, Connectivity - London",
+      "location": "London, UK",
+      "remote": false,
+      "salary": "",
+      "description": "Our mission on the Connectivity team is to make Claude the most connected AI. As agents take on more real-world work, we're taking a leading role in defining how they get access to external systems — safely, with the right permissions, and in ways enterprises can trust. We ship for claude.ai ,...",
+      "applyUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5309805008",
+      "source": "Anthropic",
+      "sourceUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5309805008",
+      "postedAt": "2026-07-09T17:59:48-04:00",
+      "tags": [
+        "TypeScript",
+        "Python",
+        "Rust",
+        "AWS",
+        "Claude Code",
+        "Anthropic"
+      ],
+      "companyIcon": "https://www.anthropic.com/favicon.ico"
+    },
+    {
+      "id": "hn-48833943",
+      "company": "Catalyst·Wayfare AI",
+      "position": "Lead AI Engineer",
+      "location": "Remote (US)",
+      "remote": true,
+      "salary": "",
+      "description": "We build and ship production AI systems for mid-market enterprises in regulated and technical domains — finance, energy, industrials, healthcare. We do not stop at PowerPoint AI strategy. We ship working systems alongside our clients' engineering teams. Small teams, deep expertise, real autonomy on...",
+      "applyUrl": "https://news.ycombinator.com/item?id=48833943",
+      "source": "HackerNews",
+      "sourceUrl": "https://news.ycombinator.com/item?id=48833943",
+      "postedAt": "2026-07-08T16:24:22+00:00",
+      "tags": [
+        "Python",
+        "AWS",
+        "GCP",
+        "Claude Code"
+      ],
+      "companyIcon": ""
+    },
+    {
+      "id": "anth-5304425008",
+      "company": "Anthropic",
+      "position": "Staff Software Engineer, Labs: Applied AI",
+      "location": "San Francisco, CA | New York City, NY",
+      "remote": false,
+      "salary": "",
+      "description": "At Anthropic, we're building AI systems that are safe, beneficial, and transformative. Our mission is to develop AI that benefits humanity, and we believe the most powerful capabilities emerge when we thoughtfully bridge the gap between research breakthroughs and real-world applications. Applied AI...",
+      "applyUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5304425008",
+      "source": "Anthropic",
+      "sourceUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5304425008",
+      "postedAt": "2026-07-08T15:55:29-04:00",
+      "tags": [
+        "Rust",
+        "AWS",
+        "Claude Code",
+        "Anthropic"
+      ],
+      "companyIcon": "https://www.anthropic.com/favicon.ico"
+    },
     {
       "id": "hn-48823535",
       "company": "Youth Inc.",
@@ -89,21 +151,6 @@
       "companyIcon": ""
     },
     {
-      "id": "rok-remote-founder-ghostwriter-for-a-u-s-based-google-ads-agency-paired-1134487",
-      "company": "Paired",
-      "position": "Founder Ghostwriter for a U.S. based Google Ads Agency",
-      "location": "Remote",
-      "remote": true,
-      "salary": "",
-      "description": "Paired is a global staffing and recruiting agency that pairs remote work with top-tier talent. We admire the importance of innovative social media strategies and are committed to connecting talented individuals with great companies that need their unique skills. Our mission is to provide great jobs...",
-      "applyUrl": "https://remoteOK.com/remote-jobs/remote-founder-ghostwriter-for-a-u-s-based-google-ads-agency-paired-1134487",
-      "source": "RemoteOK",
-      "sourceUrl": "https://remoteok.com/remote-jobs/remote-founder-ghostwriter-for-a-u-s-based-google-ads-agency-paired-1134487",
-      "postedAt": "2026-07-04T14:24:30+00:00",
-      "tags": [],
-      "companyIcon": ""
-    },
-    {
       "id": "hn-48768318",
       "company": "airCFO (  )",
       "position": "Software Engineer",
@@ -139,21 +186,6 @@
       "companyIcon": ""
     },
     {
-      "id": "rok-remote-asset-management-analyst-multifamily-real-estate-bluecore-residential-1134402",
-      "company": "Bluecore Residential",
-      "position": "Asset Management Analyst Multifamily Real Estate",
-      "location": "Remote",
-      "remote": true,
-      "salary": "",
-      "description": "100% REMOTE Bluecore Residential is a privately owned real estate investment company headquartered in Newport Beach, CA. Bluecore principals have owned and operated a multifamily portfolio totaling more than 16,000 units located in high-growth secondary markets. Bluecore's competitive advantage...",
-      "applyUrl": "https://remoteOK.com/remote-jobs/remote-asset-management-analyst-multifamily-real-estate-bluecore-residential-1134402",
-      "source": "RemoteOK",
-      "sourceUrl": "https://remoteok.com/remote-jobs/remote-asset-management-analyst-multifamily-real-estate-bluecore-residential-1134402",
-      "postedAt": "2026-07-02T16:00:55+00:00",
-      "tags": [],
-      "companyIcon": ""
-    },
-    {
       "id": "hn-48761457",
       "company": "Runway",
       "position": "Trust & Safety Engineer",
@@ -171,32 +203,6 @@
         "Rust",
         "AWS",
         "GCP"
-      ],
-      "companyIcon": ""
-    },
-    {
-      "id": "rok-remote-senior-ai-engineer-architect-lemon-io-1134396",
-      "company": "Lemon.io",
-      "position": "Senior AI Engineer Architect",
-      "location": "Remote",
-      "remote": true,
-      "salary": "",
-      "description": "Are you a talented Senior AI Engineer/Architect looking for a remote job that lets you show your skills and get decent compensation? Look no further than Lemon.io — the marketplace that connects you with hand-picked startups in the US and Europe. What we offer: The rate depends on your skills and...",
-      "applyUrl": "https://remoteOK.com/remote-jobs/remote-senior-ai-engineer-architect-lemon-io-1134396",
-      "source": "RemoteOK",
-      "sourceUrl": "https://remoteok.com/remote-jobs/remote-senior-ai-engineer-architect-lemon-io-1134396",
-      "postedAt": "2026-07-02T12:25:12+00:00",
-      "tags": [
-        "React",
-        "Next.js",
-        "TypeScript",
-        "JavaScript",
-        "Python",
-        "Rust",
-        "Go",
-        "Node.js",
-        "React Native",
-        "Swift"
       ],
       "companyIcon": ""
     },
@@ -536,6 +542,29 @@
         "Anthropic"
       ],
       "companyIcon": "https://www.anthropic.com/favicon.ico"
+    },
+    {
+      "id": "wwr-mrioa-web-developer-remote",
+      "company": "MRIoA",
+      "position": "Web Developer (Remote)",
+      "location": "Remote",
+      "remote": true,
+      "salary": "",
+      "description": "Headquarters: Salt Lake City, Utah, United States URL: http://mrioa.com Who We Are - Motivated by Purpose. Powered by Clinical Expertise. Founded in 1983, we’re a clinically driven, tech-enabled utilization management company offering expert clinical reviews, regulatory guidance, and actionable...",
+      "applyUrl": "https://weworkremotely.com/remote-jobs/mrioa-web-developer-remote",
+      "source": "WeWorkRemotely",
+      "sourceUrl": "https://weworkremotely.com/remote-jobs/mrioa-web-developer-remote",
+      "postedAt": "2026-06-18T02:19:12+00:00",
+      "tags": [
+        "React",
+        "JavaScript",
+        "Python",
+        "Go",
+        "Node.js",
+        "Claude Code",
+        "Django"
+      ],
+      "companyIcon": ""
     },
     {
       "id": "anth-5255912008",
@@ -1084,32 +1113,6 @@
         "Rust",
         "AWS",
         "Claude Code",
-        "Anthropic"
-      ],
-      "companyIcon": "https://www.anthropic.com/favicon.ico"
-    },
-    {
-      "id": "anth-5191433008",
-      "company": "Anthropic",
-      "position": "Software Engineer, Safeguards Foundations (Internal Tooling)",
-      "location": "London, UK",
-      "remote": false,
-      "salary": "",
-      "description": "The Safeguards team is responsible for the systems that detect, review, and act on misuse of Anthropic's models — work that sits at the very centre of our mission to develop AI safely. Within Safeguards, the Foundations team builds the platforms, infrastructure, and internal tools that the rest of...",
-      "applyUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5191433008",
-      "source": "Anthropic",
-      "sourceUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5191433008",
-      "postedAt": "2026-04-20T11:22:41-04:00",
-      "tags": [
-        "React",
-        "TypeScript",
-        "Python",
-        "Rust",
-        "PostgreSQL",
-        "AWS",
-        "GCP",
-        "Claude Code",
-        "Rails",
         "Anthropic"
       ],
       "companyIcon": "https://www.anthropic.com/favicon.ico"
@@ -1820,7 +1823,7 @@
     {
       "id": "anth-5074908008",
       "company": "Anthropic",
-      "position": "Software Engineer, Safeguards Infrastructure ",
+      "position": "Staff+ Software Engineer, Safeguards Infrastructure ",
       "location": "London, UK",
       "remote": false,
       "salary": "",
