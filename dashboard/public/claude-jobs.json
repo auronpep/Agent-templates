@@ -1,10 +1,9 @@
 {
-  "lastUpdated": "2026-07-18T05:29:56.035089+00:00",
+  "lastUpdated": "2026-07-19T05:57:02.217407+00:00",
   "totalJobs": 102,
   "sources": [
     "Anthropic",
     "HackerNews",
-    "RemoteOK",
     "WeWorkRemotely"
   ],
   "jobs": [
@@ -52,23 +51,6 @@
         "Claude Code",
         "Cursor",
         "Copilot"
-      ],
-      "companyIcon": ""
-    },
-    {
-      "id": "rok-remote-designer-intelligent-change-1134905",
-      "company": "Intelligent Change",
-      "position": "Designer",
-      "location": "Remote",
-      "remote": true,
-      "salary": "",
-      "description": "A Note from the Founder Intelligent Change began as something personal. Before it was a company, it was a question I was trying to answer in my own life: Why do we know so much about personal growth, yet struggle to live it consistently? Over the years, what we created resonated far beyond anything...",
-      "applyUrl": "https://remoteOK.com/remote-jobs/remote-designer-intelligent-change-1134905",
-      "source": "RemoteOK",
-      "sourceUrl": "https://remoteok.com/remote-jobs/remote-designer-intelligent-change-1134905",
-      "postedAt": "2026-07-14T16:10:22+00:00",
-      "tags": [
-        "Go"
       ],
       "companyIcon": ""
     },
@@ -1914,6 +1896,27 @@
         "AWS",
         "Claude Code",
         "Rails",
+        "Anthropic"
+      ],
+      "companyIcon": "https://www.anthropic.com/favicon.ico"
+    },
+    {
+      "id": "anth-5140405008",
+      "company": "Anthropic",
+      "position": "Applied AI Architect, Government Technology",
+      "location": "Washington, DC",
+      "remote": false,
+      "salary": "",
+      "description": "As an Applied AI team member at Anthropic, you will be a Pre-Sales architect focused on becoming a trusted technical advisor helping systems integrators, startups, and other GovTech companies understand the value of Claude and paint the vision on how they can successfully integrate and deploy...",
+      "applyUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5140405008",
+      "source": "Anthropic",
+      "sourceUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5140405008",
+      "postedAt": "2026-03-05T14:59:18-05:00",
+      "tags": [
+        "Python",
+        "Rust",
+        "AWS",
+        "Claude Code",
         "Anthropic"
       ],
       "companyIcon": "https://www.anthropic.com/favicon.ico"
