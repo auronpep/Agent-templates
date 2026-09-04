@@ -408,6 +408,13 @@ class WebSocketServer {
         }
       });
     }, this.options.heartbeatInterval);
+
+    // The listening socket is what should keep this server alive, not the
+    // liveness probe. Without unref, a closed server with a stale heartbeat
+    // still blocks exit.
+    if (typeof this.heartbeatInterval.unref === 'function') {
+      this.heartbeatInterval.unref();
+    }
   }
 
   /**

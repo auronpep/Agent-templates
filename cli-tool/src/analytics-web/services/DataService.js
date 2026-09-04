@@ -330,6 +330,11 @@ class DataService {
         console.error('Error during periodic refresh:', error);
       }
     }, interval);
+
+    // A polling refresh should not hold the process open by itself.
+    if (typeof this.refreshInterval.unref === 'function') {
+      this.refreshInterval.unref();
+    }
   }
   
   /**
