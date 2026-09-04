@@ -61,6 +61,14 @@ class DataCache {
       this.evictOldEntries();
       this.enforceSizeLimits();
     }, 15000); // Every 15 seconds (reduced from 30 seconds)
+
+    // Housekeeping must not keep the process alive on its own. Without this,
+    // simply constructing a DataCache makes Node hang forever at the end of a
+    // command, because an active interval is a ref'd handle on the event loop.
+    // The timer still fires normally for as long as something else is running.
+    if (typeof this.cleanupInterval.unref === 'function') {
+      this.cleanupInterval.unref();
+    }
   }
 
   /**
