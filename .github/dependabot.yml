@@ -4,6 +4,13 @@ updates:
     directory: "/cli-tool"
     schedule:
       interval: "weekly"
+    groups:
+      # One PR per ecosystem for routine minor/patch bumps instead of one per
+      # dependency. Majors stay separate so they still get individual review.
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 5
     labels:
       - "dependencies"
@@ -12,6 +19,13 @@ updates:
     directory: "/dashboard"
     schedule:
       interval: "weekly"
+    groups:
+      # One PR per ecosystem for routine minor/patch bumps instead of one per
+      # dependency. Majors stay separate so they still get individual review.
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 5
     labels:
       - "dependencies"
@@ -20,6 +34,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      # One PR per ecosystem for routine minor/patch bumps instead of one per
+      # dependency. Majors stay separate so they still get individual review.
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 5
     labels:
       - "ci"
