@@ -7,6 +7,25 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - "dependencies"
+    # These packages are locked to their last CommonJS major.
+    # cli-tool has no "type" field, so it is CommonJS and loads every
+    # dependency with require(). The next major of each of these is ESM-only
+    # and cannot be require()d on the Node versions this repo tests (18, 20).
+    # Lifting any of them is an ESM migration, not a dependency bump - see the
+    # CommonJS interop guard in scripts/check-cjs-interop.js.
+    ignore:
+      - dependency-name: "chalk"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "inquirer"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "boxen"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "ora"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "open"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "uuid"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "npm"
     directory: "/dashboard"
