@@ -367,14 +367,11 @@ src/chats/
 
 #### Development Commands
 ```bash
-# Start chat monitor
-npm run chats:start
+# Start chat monitor (from cli-tool/)
+node bin/create-claude-config.js --chats
 
 # Start with tunnel (requires cloudflared)
-npm run chats:start -- --tunnel
-
-# Test mobile interface
-npm run chats:test
+node bin/create-claude-config.js --chats --tunnel
 ```
 
 ### 🔍 Health Check Development
@@ -389,8 +386,8 @@ Comprehensive diagnostics tool for Claude Code installations.
 
 #### Development
 ```bash
-# Run health check
-npm run health-check
+# Run health check (from cli-tool/)
+node bin/create-claude-config.js --health-check
 
 # Add new health check
 # 1. Create check in src/health-checks/
@@ -422,13 +419,10 @@ npm start -- --language javascript --framework react --dry-run
 ```bash
 # Test analytics
 npm run analytics:test
-
-# Test chat monitor
-npm run chats:test
-
-# Test health check
-npm run health-check:test
 ```
+
+The chat monitor and health check have no dedicated test scripts yet - they are
+exercised through the CLI flags shown above.
 
 ## 🤝 Contribution Process
 
