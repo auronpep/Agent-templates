@@ -50,21 +50,23 @@ describe('PerformanceMonitor', () => {
   });
 
   describe('timer operations', () => {
-    it('should start and end timers correctly', () => {
+    it('should start and end timers correctly', async () => {
       const timerName = 'test_operation';
-      
+
       performanceMonitor.startTimer(timerName);
       expect(performanceMonitor.timers[timerName]).toBeDefined();
       expect(performanceMonitor.timers[timerName].start).toBeDefined();
-      
-      // Wait a small amount of time
-      setTimeout(() => {
-        const duration = performanceMonitor.endTimer(timerName);
-        
-        expect(duration).toBeGreaterThan(0);
-        expect(performanceMonitor.timers[timerName]).toBeUndefined();
-        expect(performanceMonitor.metrics.performance).toBeDefined();
-      }, 10);
+
+      // Await the delay. A bare setTimeout callback would run after the test
+      // has already resolved, so its assertions would either be lost or be
+      // reported against whichever test happened to be running at the time.
+      await new Promise((resolve) => setTimeout(resolve, 10));
+
+      const duration = performanceMonitor.endTimer(timerName);
+
+      expect(duration).toBeGreaterThan(0);
+      expect(performanceMonitor.timers[timerName]).toBeUndefined();
+      expect(performanceMonitor.metrics.performance).toBeDefined();
     });
 
     it('should handle ending non-existent timer', () => {
