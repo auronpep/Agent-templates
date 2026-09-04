@@ -48,9 +48,6 @@ module.exports = {
   // Module paths
   roots: ['<rootDir>/src', '<rootDir>/tests'],
   
-  // Transform files
-  transform: {},
-  
   // Test timeout
   testTimeout: 10000,
   
