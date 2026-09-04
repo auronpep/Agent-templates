@@ -47,7 +47,13 @@ class PerformanceMonitor {
       this.logPerformanceReport();
       this.cleanupOldMetrics();
     }, this.options.logInterval);
-    
+
+    // Reporting must not be the reason the process stays alive. The timer keeps
+    // firing while real work is in flight; it just loses its vote on shutdown.
+    if (typeof this.logInterval.unref === 'function') {
+      this.logInterval.unref();
+    }
+
     // Monitor process events
     this.setupProcessMonitoring();
   }
