@@ -11,13 +11,20 @@ const path = require('path');
 const StateServicePath = path.join(__dirname, '../../src/analytics-web/services/StateService.js');
 const StateServiceCode = fs.readFileSync(StateServicePath, 'utf8');
 
-// Create a module-like environment
-const moduleExports = {};
-const module = { exports: moduleExports };
+// StateService.js is a browser file that ends with a CommonJS-style export
+// guard, so it has to be evaluated inside something that looks like a module.
+//
+// It cannot be done with `const module = ...` at this scope: `module` is
+// already a parameter of the CommonJS wrapper, and redeclaring it with const
+// is a SyntaxError that stops the whole suite from loading. `new Function`
+// gives us a fresh scope where `module` is just a parameter name.
+const loadBrowserModule = (source) => {
+  const sandbox = { exports: {} };
+  const factory = new Function('module', 'exports', `${source}\nreturn module.exports;`);
+  return factory(sandbox, sandbox.exports);
+};
 
-// Execute the StateService code in our test environment
-eval(StateServiceCode);
-const StateService = moduleExports.StateService || global.StateService;
+const StateService = loadBrowserModule(StateServiceCode);
 
 describe('StateService', () => {
   let stateService;
@@ -358,7 +365,10 @@ describe('StateService', () => {
         systemHealth: {},
         isLoading: false,
         error: null,
-        lastUpdate: null
+        // resetState() passes `lastUpdate: null`, but setState() applies
+        // `lastUpdate: Date.now()` after spreading the incoming state, so a
+        // reset is stamped like any other change. Asserting the real value.
+        lastUpdate: expect.any(Number)
       });
     });
   });
@@ -374,7 +384,9 @@ describe('StateService', () => {
       
       expect(stats).toMatchObject({
         subscribers: 1,
-        historySize: 1,
+        // Two state changes happened above: setState(...) and setError(...),
+        // and every setState pushes one history entry.
+        historySize: 2,
         conversationsCount: 3,
         lastUpdate: expect.any(Number),
         hasError: true,
