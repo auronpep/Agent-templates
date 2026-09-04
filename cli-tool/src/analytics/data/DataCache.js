@@ -528,7 +528,10 @@ class DataCache {
       misses: 0,
       invalidations: 0,
       filesInvalidated: 0,
-      computationsInvalidated: 0
+      computationsInvalidated: 0,
+      // Must match the constructor's shape. Omitting this made clearAll()
+      // delete the key, so the next `metrics.evictions += n` produced NaN.
+      evictions: 0
     };
   }
 
