@@ -66,7 +66,9 @@ class PerformanceMonitor {
       clearInterval(this.logInterval);
       this.logInterval = null;
     }
-    
+
+    this.teardownProcessMonitoring();
+
     console.log(chalk.yellow('📊 Performance monitoring stopped'));
   }
 
@@ -74,27 +76,47 @@ class PerformanceMonitor {
    * Setup process monitoring
    */
   setupProcessMonitoring() {
-    // Monitor memory usage
-    process.on('warning', (warning) => {
-      this.recordError('process_warning', warning.message, {
-        name: warning.name,
-        code: warning.code
-      });
-    });
-    
-    // Monitor uncaught exceptions
-    process.on('uncaughtException', (error) => {
-      this.recordError('uncaught_exception', error.message, {
-        stack: error.stack
-      });
-    });
-    
-    // Monitor unhandled rejections
-    process.on('unhandledRejection', (reason, promise) => {
-      this.recordError('unhandled_rejection', reason.toString(), {
-        promise: promise.toString()
-      });
-    });
+    // Already attached - do not register a second set of listeners.
+    if (this.processListeners) return;
+
+    // Handlers are kept on the instance so stopMonitoring() can detach them.
+    // Anonymous listeners could never be removed, so every monitor that was
+    // started left three process listeners behind for the life of the process.
+    this.processListeners = {
+      warning: (warning) => {
+        this.recordError('process_warning', warning.message, {
+          name: warning.name,
+          code: warning.code
+        });
+      },
+      uncaughtException: (error) => {
+        this.recordError('uncaught_exception', error.message, {
+          stack: error.stack
+        });
+      },
+      unhandledRejection: (reason, promise) => {
+        this.recordError('unhandled_rejection', reason.toString(), {
+          promise: promise.toString()
+        });
+      }
+    };
+
+    process.on('warning', this.processListeners.warning);
+    process.on('uncaughtException', this.processListeners.uncaughtException);
+    process.on('unhandledRejection', this.processListeners.unhandledRejection);
+  }
+
+  /**
+   * Detach the process listeners registered by setupProcessMonitoring()
+   */
+  teardownProcessMonitoring() {
+    if (!this.processListeners) return;
+
+    process.off('warning', this.processListeners.warning);
+    process.off('uncaughtException', this.processListeners.uncaughtException);
+    process.off('unhandledRejection', this.processListeners.unhandledRejection);
+
+    this.processListeners = null;
   }
 
   /**
