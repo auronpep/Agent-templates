@@ -1,0 +1,36 @@
+name: CLI Tool Tests
+
+on:
+  pull_request:
+    paths:
+      - 'cli-tool/**'
+      - '.github/workflows/cli-tool-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cli-tool/**'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: npm test (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 18 is the version publish-package.yml uses, so it is the one that
+        # actually gates a release. 22 matches the dashboard deploy job.
+        node: ['18', '22']
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install
+        working-directory: cli-tool
+        run: npm ci --ignore-scripts
+      - name: Test
+        working-directory: cli-tool
+        run: npm test
