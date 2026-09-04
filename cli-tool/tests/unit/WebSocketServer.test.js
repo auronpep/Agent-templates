@@ -3,11 +3,28 @@
  * Tests real-time communication server
  */
 
+// Mock the WebSocket library.
+//
+// This is declared ABOVE the requires on purpose. jest.config.js currently sets
+// `transform: {}`, which disables babel-plugin-jest-hoist, so jest.mock() calls
+// are not lifted above the require() calls. Left in its original position the
+// real `ws` module was captured first, and `WebSocket.Server.mockImplementation`
+// threw "is not a function". An explicit factory also avoids relying on
+// automock to reconstruct the module's shape.
+jest.mock('ws', () => {
+  const MockServer = jest.fn();
+  return {
+    Server: MockServer,
+    // Numeric readyState constants, matching the real ws module.
+    CONNECTING: 0,
+    OPEN: 1,
+    CLOSING: 2,
+    CLOSED: 3,
+  };
+});
+
 const WebSocketServer = require('../../src/analytics/notifications/WebSocketServer');
 const WebSocket = require('ws');
-
-// Mock the WebSocket library
-jest.mock('ws');
 
 describe('WebSocketServer', () => {
   let webSocketServer;
@@ -25,7 +42,14 @@ describe('WebSocketServer', () => {
     // Mock WebSocket server
     mockWss = {
       on: jest.fn(),
-      close: jest.fn(),
+      // The real ws Server.close(cb) invokes its callback once shutdown
+      // finishes, and WebSocketServer.close() awaits exactly that:
+      //   await new Promise((resolve) => this.wss.close(resolve));
+      // A bare jest.fn() never calls back, so that promise never settled and
+      // the close test sat until Jest's 30s timeout.
+      close: jest.fn((callback) => {
+        if (typeof callback === 'function') callback();
+      }),
       clients: new Set()
     };
 
@@ -46,6 +70,14 @@ describe('WebSocketServer', () => {
   });
 
   afterEach(() => {
+    // Every test builds a fresh server, and initialize() starts a heartbeat
+    // interval. Without stopping it the timer outlives its test, then fires
+    // against that old instance's client map - which in some tests holds
+    // entries with no `ws` - throwing "Cannot read properties of undefined
+    // (reading 'readyState')" inside whichever test is running 30s later.
+    if (webSocketServer && typeof webSocketServer.stopHeartbeat === 'function') {
+      webSocketServer.stopHeartbeat();
+    }
     jest.clearAllMocks();
   });
 
@@ -215,7 +247,11 @@ describe('WebSocketServer', () => {
       
       webSocketServer.clients.set('client2', {
         id: 'client2',
-        ws: { ...mockWs, readyState: WebSocket.OPEN, send: jest.fn() },
+        // Shares mockWs.send with client1 (via the spread) so the broadcast
+        // assertions can count total deliveries. Overriding it with a separate
+        // jest.fn() here made "broadcast to all clients" unprovable: mockWs.send
+        // could only ever record client1's delivery.
+        ws: { ...mockWs, readyState: WebSocket.OPEN },
         subscriptions: new Set(['data_updates'])
       });
     });
