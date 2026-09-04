@@ -11,13 +11,20 @@ const path = require('path');
 const DataServicePath = path.join(__dirname, '../../src/analytics-web/services/DataService.js');
 const DataServiceCode = fs.readFileSync(DataServicePath, 'utf8');
 
-// Create a module-like environment
-const moduleExports = {};
-const module = { exports: moduleExports };
+// DataService.js is a browser file that ends with a CommonJS-style export
+// guard, so it has to be evaluated inside something that looks like a module.
+//
+// It cannot be done with `const module = ...` at this scope: `module` is
+// already a parameter of the CommonJS wrapper, and redeclaring it with const
+// is a SyntaxError that stops the whole suite from loading. `new Function`
+// gives us a fresh scope where `module` is just a parameter name.
+const loadBrowserModule = (source) => {
+  const sandbox = { exports: {} };
+  const factory = new Function('module', 'exports', `${source}\nreturn module.exports;`);
+  return factory(sandbox, sandbox.exports);
+};
 
-// Execute the DataService code in our test environment
-eval(DataServiceCode);
-const DataService = moduleExports.DataService || global.DataService;
+const DataService = loadBrowserModule(DataServiceCode);
 
 describe('DataService', () => {
   let dataService;
@@ -180,7 +187,10 @@ describe('DataService', () => {
       expect(dataService.cachedFetch).toHaveBeenCalledWith('/api/charts');
       
       await dataService.getSessionData();
-      expect(dataService.cachedFetch).toHaveBeenCalledWith('/api/session/data');
+      // getSessionData passes a cache duration: 5s normally, 30s with real-time on.
+      expect(dataService.cachedFetch).toHaveBeenCalledWith('/api/session/data', {
+        cacheDuration: 5000,
+      });
       
       await dataService.getProjectStats();
       expect(dataService.cachedFetch).toHaveBeenCalledWith('/api/session/projects');
@@ -191,14 +201,19 @@ describe('DataService', () => {
   });
 
   describe('WebSocket integration', () => {
-    it('should enable real-time when WebSocket connects', () => {
+    it('should enable real-time when WebSocket connects', async () => {
       expect(dataService.realTimeEnabled).toBe(false);
-      
-      // Simulate WebSocket connection
+
+      // Simulate WebSocket connection. The handler itself is synchronous and
+      // calls subscribeToChannels() without awaiting it, so the three
+      // subscribe() calls resolve across several microtask ticks. Awaiting the
+      // handler is not enough - one await only flushes one tick, which is why
+      // this previously saw a single subscription. Drain the queue instead.
       const connectedHandler = mockWebSocketService.on.mock.calls
         .find(call => call[0] === 'connected')[1];
       connectedHandler();
-      
+      await new Promise((resolve) => setImmediate(resolve));
+
       expect(dataService.realTimeEnabled).toBe(true);
       expect(mockWebSocketService.subscribe).toHaveBeenCalledWith('data_updates');
       expect(mockWebSocketService.subscribe).toHaveBeenCalledWith('conversation_updates');
