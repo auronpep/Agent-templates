@@ -11,7 +11,7 @@
     "dev": "vercel dev",
     "build": "echo 'Build complete'",
     "start": "vercel dev",
-    "test": "echo 'No tests specified'",
+    "test": "npm test --prefix cli-tool",
     "agent:security-auditor": "security-auditor 'Security audit covering codebase, dependencies, and deployment configuration'",
     "deploy": "./scripts/deploy.sh",
     "deploy:dashboard": "./scripts/deploy.sh",
