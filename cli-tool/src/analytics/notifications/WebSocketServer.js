@@ -395,6 +395,14 @@ class WebSocketServer {
   startHeartbeat() {
     this.heartbeatInterval = setInterval(() => {
       this.clients.forEach((client, clientId) => {
+        // A client entry without a socket cannot be pinged or terminated.
+        // Drop it rather than throwing inside the interval, where the error
+        // has no caller to surface it.
+        if (!client.ws) {
+          this.clients.delete(clientId);
+          return;
+        }
+
         if (!client.isAlive) {
           console.log(chalk.yellow(`💔 Terminating unresponsive client: ${clientId}`));
           client.ws.terminate();
@@ -458,9 +466,10 @@ class WebSocketServer {
     
     this.stopHeartbeat();
     
-    // Close all client connections
-    this.clients.forEach((client, clientId) => {
-      if (client.ws.readyState === WebSocket.OPEN) {
+    // Close all client connections. Shutdown must not be derailed by a
+    // half-registered client that has no socket yet.
+    this.clients.forEach((client) => {
+      if (client.ws && client.ws.readyState === WebSocket.OPEN) {
         client.ws.close(1000, 'Server shutting down');
       }
     });
